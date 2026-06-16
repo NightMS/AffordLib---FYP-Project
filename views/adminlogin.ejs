@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Login - AffordaLib</title>
+  <link rel="stylesheet" href="/register.css" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <style>
+    .form-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh; /* Full height viewport */
+      padding: 2rem;
+      background-color: #f5f5f5;
+    }
+
+    form {
+      max-width: 400px;
+      width: 100%;
+      background: white;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Optional: Include the same navbar -->
+  <%- include('partials/navbar') %>
+
+  <% if (successMessage) { %>
+    <div class="alert alert-success alert-dismissible fade show text-center mx-auto mt-3" style="max-width: 500px;" role="alert">
+        <%= successMessage %>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    <% } %>
+
+    <% if (errorMessage) { %>
+    <div class="alert alert-danger alert-dismissible fade show text-center mx-auto mt-3" style="max-width: 500px;" role="alert">
+        <%= errorMessage %>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    <% } %>
+
+  <div class="form-wrapper">
+    <form action="/adminlogin" method="POST" class="p-4 shadow-sm rounded bg-white" style="max-width: 400px; width: 100%;">
+      <h2 class="text-center mb-4">Admin Login</h2>
+
+      <div class="form-floating mb-3">
+        <input type="email" name="email" class="form-control" id="adminEmail" placeholder="admin@affordalib.com" required />
+        <label for="adminEmail">Admin Email</label>
+      </div>
+
+      <div class="form-floating mb-3">
+        <input type="password" name="password" class="form-control" id="adminPassword" placeholder="Password" required />
+        <label for="adminPassword">Password</label>
+      </div>
+
+      <div class="text-center mt-3">
+        <button type="submit" class="btn btn-primary w-100">Login</button>
+      </div>
+    </form>
+  </div>
+
+</body>
+</html>

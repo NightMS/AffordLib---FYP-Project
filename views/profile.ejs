@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Profile - <%= user.username %></title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Reuse register.css -->
+  <link rel="stylesheet" href="/css/register.css">
+  <style>
+    .profile-card {
+      background: #ffffff;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      max-width: 500px;
+      width: 100%;
+    }
+    .form-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background-color: #f5f5f5;
+    }
+    h2 {
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <%- include('partials/navbar') %>
+
+  <% if (successMessage) { %>
+  <div class="alert alert-success alert-dismissible fade show text-center mx-auto mt-3" style="max-width: 500px;" role="alert">
+    <%= successMessage %>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+<% } %>
+
+<% if (errorMessage) { %>
+  <div class="alert alert-danger alert-dismissible fade show text-center mx-auto mt-3" style="max-width: 500px;" role="alert">
+    <%= errorMessage %>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+<% } %>
+
+  <div class="form-wrapper">
+    <div class="profile-card">
+      <h2 class="text-center mb-4">Your Profile</h2>
+
+      <!-- Basic Info Form -->
+      <form action="/profile/update-username" method="POST" class="mb-4 shadow-sm p-4 bg-white rounded" style="width: 100%; max-width: 400px;">
+        <h3 class="text-center mb-3">Update Info</h3>
+        <div class="form-floating mb-3">
+          <input type="text" name="Username" class="form-control" id="Username" placeholder="Username" value="<%= user.username %>" readonly>
+          <label for="Username">Username</label>
+        </div>
+        <div class="form-floating mb-3">
+          <input type="text" name="newUsername" class="form-control" id="newUsername" placeholder="New Username" required>
+          <label for="newUsername">New Username</label>
+        </div>
+        <div class="form-floating mb-3">
+          <input type="email" class="form-control" id="email" name="email" value="<%= user.email %>" readonly>
+          <label for="email">Email (read-only)</label>
+        </div>
+
+        <button type="submit" class="btn btn-primary w-100 mb-3">Update Info</button>
+      </form>
+
+      <hr>
+
+      <!-- Password Change Form -->
+      <form action="/profile/update-password" method="POST">
+        <h5 class="text-center mt-3 mb-3">Change Password</h5>
+
+        <div class="form-floating mb-3">
+          <input type="password" class="form-control" name="currentPassword" id="currentPassword" placeholder="Current Password" required>
+          <label for="currentPassword">Current Password</label>
+        </div>
+
+        <div class="form-floating mb-3">
+          <input type="password" class="form-control" name="newPassword" id="newPassword" placeholder="New Password" required>
+          <label for="newPassword">New Password</label>
+        </div>
+
+        <div class="form-floating mb-3">
+          <input type="password" class="form-control" name="confirmPassword" id="confirmPassword" placeholder="Confirm New Password" required>
+          <label for="confirmPassword">Confirm New Password</label>
+        </div>
+
+        <button type="submit" class="btn btn-outline-success w-100">Change Password</button>
+      </form>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

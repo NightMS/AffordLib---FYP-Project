@@ -1,0 +1,9 @@
+Username and Password for admin:
+admin@affordlib.com
+Admin123
+for adminlogin behind the localhostandport number add in /adminlogin
+(Admin cannot be created by any user alone it must be created by another admin account)
+
+Username and Password for customer:
+customer@affordlib.com
+Customer1

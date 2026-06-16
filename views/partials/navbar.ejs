@@ -1,0 +1,99 @@
+<style>
+  .search-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0;
+    background: transparent;
+    box-shadow: none;
+    margin-left: 30px;
+    width: 100%;
+    max-width: 500px;
+  }
+
+  .search-input {
+    flex-grow: 1;
+    padding: 6px 12px;
+    font-size: 14px;
+    border-radius: 20px;
+    border: 1px solid #ccc;
+  }
+
+  .search-button {
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 14px;
+  }
+
+  @media (max-width: 991px) {
+    .search-bar {
+      margin: 10px 0;
+      max-width: 100%;
+    }
+  }
+</style>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
+  <div class="container-fluid">
+    <a class="navbar-brand fw-bold" href="/">AffordaLib</a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarContent">
+
+      <!-- Search bar -->
+      <!-- <form class="search-bar" action="/journals" method="GET">
+        <input type="text" name="query" class="form-control me-2" placeholder="Search articles..." />
+        <button type="submit" class="btn btn-outline-primary search-button">Search</button>
+      </form> -->
+
+      <form class="search-bar" action="/journals" method="GET">
+        <input class="form-control me-2" type="search" name="search" placeholder="Search articles..." />
+        <button class="btn btn-outline-primary" type="submit">Search</button>
+      </form>
+
+      <!-- Right navigation -->
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+        <% if (admin) { %>
+          <!-- Admin dropdown -->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarAdmin" role="button" data-bs-toggle="dropdown">
+              <%= admin.username %>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end">
+              <li><a class="dropdown-item" href="/admindashboard">Dashboard</a></li>
+              <li><a class="dropdown-item" href="/admin/manageusers">Manage Users</a></li>
+              <li><a class="dropdown-item" href="/admin/manageadmins">Manage Admins</a></li>
+              <li><a class="dropdown-item" href="/admin/managejournalarticles">Manage Journal Articles</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item text-danger" href="/adminlogout">Logout</a></li>
+            </ul>
+          </li>
+        <% } else if (user) { %>
+          <!-- User dropdown -->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarUser" role="button" data-bs-toggle="dropdown">
+              <%= user.username %>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end">
+              <li><a class="dropdown-item" href="/profile">Profile</a></li>
+              <li><a class="dropdown-item" href="/journals">View Journal Article</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item text-danger" href="/logout">Logout</a></li>
+            </ul>
+          </li>
+        <% } else { %>
+          <!-- Not logged in -->
+          <li class="nav-item">
+            <a class="nav-link" href="/login">Login</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/register">Register</a>
+          </li>
+        <% } %>
+      </ul>
+    </div>
+  </div>
+</nav>

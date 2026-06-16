@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Admin Dashboard - AffordaLib</title>
+  <link rel="stylesheet" href="/css/register.css" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <style>
+    .card-hover {
+      transition: transform 0.2s ease-in-out;
+    }
+    .card-hover:hover {
+      transform: translateY(-5px);
+    }
+    .icon-large {
+      font-size: 2rem;
+    }
+  </style>
+</head>
+<body>
+  <%- include('partials/navbar') %>
+
+  <div class="container mt-5">
+    <h2 class="text-center mb-4">Admin Dashboard</h2>
+
+    <div class="row row-cols-1 row-cols-md-4 g-4 justify-content-center">
+      <!-- Users -->
+      <div class="col">
+        <a href="/admin/manageusers" class="text-decoration-none text-dark">
+          <div class="card card-hover shadow-sm text-center p-3">
+            <div class="icon-large mb-2">👥</div>
+            <h5 class="fw-bold">Users</h5>
+            <p><%= userCount %> registered</p>
+          </div>
+        </a>
+      </div>
+
+      <!-- Admins -->
+      <div class="col">
+        <a href="/admin/manageadmins" class="text-decoration-none text-dark">
+          <div class="card card-hover shadow-sm text-center p-3">
+            <div class="icon-large mb-2">🛡️</div>
+            <h5 class="fw-bold">Admins</h5>
+            <p><%= adminCount %> total</p>
+          </div>
+        </a>
+      </div>
+
+      <!-- Journal Articles -->
+      <div class="col">
+        <a href="/admin/managejournalarticles" class="text-decoration-none text-dark">
+          <div class="card card-hover shadow-sm text-center p-3">
+            <div class="icon-large mb-2">📄</div>
+            <h5 class="fw-bold">Journal Articles</h5>
+            <p><%= articleCount %> articles</p>
+          </div>
+        </a>
+      </div>
+
+      <!-- Tags -->
+      <div class="col">
+        <a href="/admin/managetags" class="text-decoration-none text-dark">
+          <div class="card card-hover shadow-sm text-center p-3">
+            <div class="icon-large mb-2">🏷️</div>
+            <h5 class="fw-bold">Tags</h5>
+            <p><%= tagCount %> tags</p>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

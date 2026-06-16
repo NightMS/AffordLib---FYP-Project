@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>View Article - AffordaLib</title>
+  <link rel="stylesheet" href="/css/register.css" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body>
+  <%- include('partials/navbar') %>
+  <%
+    function getStars(rating) {
+        let fullStars = Math.floor(rating);
+        let stars = '';
+        for (let i = 0; i < fullStars; i++) stars += '★';
+        for (let i = fullStars; i < 5; i++) stars += '☆';
+        return stars;
+    }
+    %>
+
+  <div class="container mt-5">
+    <div class="card shadow p-4 mb-5">
+      <h2 class="mb-3"><%= article.title %></h2>
+      <p><strong>Author:</strong> <%= article.author %></p>
+      <p><strong>Tags:</strong> <%= article.tags %></p>
+      <p><strong>Visibility:</strong> <%= article.visibility %></p>
+      <p><strong>Created At:</strong> <%= article.created_at.toLocaleDateString() %></p>
+      <p><strong>Abstract:</strong></p>
+      <p><%= article.abstract %></p>
+      <h4>Average Rating: <%= typeof avgRating === 'number' ? getStars(avgRating) + ' (' + avgRating + ')' : avgRating %></h4>
+
+      <div class="d-flex gap-3 mt-4">
+        <a href="/uploads/articles/<%= article.file_path %>" target="_blank" class="btn btn-primary">View Full Article (PDF)</a>
+        <a href="/journals" class="btn btn-secondary">Back to Articles</a>
+      </div>
+    </div>
+
+    <% if (user) { %>
+    <div class="card shadow p-4 mb-4">
+      <h4 class="mb-3">Rate This Article</h4>
+      <form action="/viewarticle/<%= article.id %>/rate" method="POST" class="row g-3 align-items-center">
+        <div class="col-auto">
+          <label for="rating" class="col-form-label">Your Rating:</label>
+        </div>
+        <div class="col-auto">
+          <select name="rating" id="rating" class="form-select">
+            <% for (let i = 1; i <= 5; i++) { %>
+              <option value="<%= i %>" <%= userRating == i ? 'selected' : '' %>><%= i %></option>
+            <% } %>
+          </select>
+        </div>
+        <div class="col-auto">
+          <button type="submit" class="btn btn-primary">Submit Rating</button>
+        </div>
+      </form>
+    </div>
+
+    <div class="card shadow p-4 mb-4">
+      <h4 class="mb-3">Leave a Comment</h4>
+      <form action="/viewarticle/<%= article.id %>/comment" method="POST">
+        <div class="mb-3">
+          <textarea name="comment" class="form-control" rows="3" required placeholder="Write your comment here..."></textarea>
+        </div>
+        <button type="submit" class="btn btn-success">Post Comment</button>
+      </form>
+    </div>
+    <% } else { %>
+      <div class="alert alert-warning text-center">
+        Please <a href="/login" class="alert-link">login</a> to comment and rate this article.
+      </div>
+    <% } %>
+
+    <div class="card shadow p-4">
+      <h4 class="mb-4">Comments</h4>
+      <% if (comments.length > 0) { %>
+        <% comments.forEach(comment => { %>
+        <div class="mb-3 border p-3 rounded bg-light">
+            <strong><%= comment.username %></strong> 
+            <small class="text-muted">[<%= comment.created_at.toLocaleString() %>]</small>
+
+            <% if (user && user.username === comment.username && editingCommentId === comment.id) { %>
+            <!-- Edit form -->
+            <form action="/viewarticle/<%= article.id %>/editcomment/<%= comment.id %>" method="POST" class="mb-2">
+                <textarea name="editedComment" class="form-control mb-2" required><%= comment.comment %></textarea>
+                <button type="submit" class="btn btn-sm btn-success me-2">Save</button>
+                <a href="/viewarticle/<%= article.id %>" class="btn btn-sm btn-secondary">Cancel</a>
+            </form>
+            <% } else { %>
+            <p class="mb-1"><%= comment.comment %></p>
+
+            <% if (user && user.username === comment.username) { %>
+                <div class="d-flex gap-2">
+                <a href="/viewarticle/<%= article.id %>?edit=<%= comment.id %>" class="btn btn-sm btn-outline-primary">Edit</a>
+                <form action="/viewarticle/<%= article.id %>/deletecomment/<%= comment.id %>" method="POST" style="display:inline;">
+                    <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+                </form>
+                </div>
+            <% } %>
+            <% } %>
+        </div>
+        <% }) %>
+      <% } else { %>
+        <p>No comments yet. Be the first to comment!</p>
+      <% } %>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
